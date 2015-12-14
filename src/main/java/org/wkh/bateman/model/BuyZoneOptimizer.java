@@ -28,7 +28,7 @@ import org.wkh.bateman.trade.TimeSeries;
  *  
  */
 public class BuyZoneOptimizer {
-    private static Logger logger = LoggerFactory.getLogger(SimpleParticleSwarmOptimizer.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(BuyZoneOptimizer.class.getName());
     
     public static double[] optimizeTriggers(final TimeSeries series, final String symbol, final int days,
             double commissions, final double slippage, final int initialBalance, final double allocation,
@@ -49,9 +49,7 @@ public class BuyZoneOptimizer {
 
                 try {
                     Account account = new Account(new BigDecimal(initialBalance), DateTime.now().minusDays(days));
-
                     BuyZoneModel model = new BuyZoneModel(account, asset, conditions, moneyManager, buyTrigger, sellTrigger, stopLoss);
-
                     Session tradingSession = model.generateSignals(asset.getTimeSeries().beginningOfSeries(),
                             asset.getTimeSeries().lastOfSeries());
 
@@ -76,7 +74,7 @@ public class BuyZoneOptimizer {
     public static double getMedianHighOpenSpread(String symbol, int days) throws Exception {
         YahooQuoteFetcher yahooFetcher = new YahooQuoteFetcher();
         String quoteStr = yahooFetcher.fetchQuotes(symbol, days, 60*60*24);
-        List<Quote> dailyQuoteList = yahooFetcher.parseQuotes(quoteStr, 60*60*24);
+        List<Quote> dailyQuoteList = yahooFetcher.parseQuotes(quoteStr, 60*60*24); // 历史价格
         
         DescriptiveStatistics stats = new DescriptiveStatistics();
         
@@ -90,7 +88,7 @@ public class BuyZoneOptimizer {
     public static void main(String[] args) throws Exception {
 
         int days = 30;
-        String symbol = args.length > 0 ? args[0] : "AAPL"; // default to AAPL if nothing provided
+        String symbol = args.length > 0 ? args[0] : "TSL"; // default to AAPL if nothing provided
         
         logger.info("Fetching data for symbol " + symbol);
         

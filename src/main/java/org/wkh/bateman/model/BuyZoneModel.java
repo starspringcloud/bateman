@@ -55,7 +55,7 @@ public class BuyZoneModel extends Rule {
         final DateTime nextDay = midnight.plusDays(1);
 
         boolean tradedToday = (Collections2.filter(session.getTrades(), new Predicate<Trade>() {
-            @Override
+       
             public boolean apply(Trade trade) {
                 return trade.getOpen().compareTo(midnight) > 0 && trade.getClose().compareTo(nextDay) < 0;
             }

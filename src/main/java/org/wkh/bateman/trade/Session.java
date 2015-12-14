@@ -111,7 +111,7 @@ public class Session {
 
     public boolean inMarket(final DateTime dateTime) {
         return (Collections2.filter(trades, new Predicate<Trade>() {
-            @Override
+           
             public boolean apply(Trade input) {
                 return input.includesDate(dateTime);
             }

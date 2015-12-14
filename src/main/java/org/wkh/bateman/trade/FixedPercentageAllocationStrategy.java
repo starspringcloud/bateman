@@ -22,7 +22,7 @@ public class FixedPercentageAllocationStrategy implements MoneyManagementStrateg
         this.asset = asset;
     }
 
-    @Override
+ 
     public int sizePosition(Account account, DateTime time) {
         BigDecimal price = asset.priceAt(time);
         BigDecimal allocated = account.getCurrentAmount().multiply(ratio);

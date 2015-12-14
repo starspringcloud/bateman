@@ -26,9 +26,7 @@ public abstract class Rule {
 
     public synchronized Session generateSignals(DateTime start, DateTime end) throws Exception {
         Session session = new Session(account, conditions);
-
         SortedMap<DateTime, BigDecimal> slice = asset.getTimeSeries().dateSlice(start, end);
-
 
         for (Map.Entry<DateTime, BigDecimal> kv : slice.entrySet()) {
             DateTime time = kv.getKey();

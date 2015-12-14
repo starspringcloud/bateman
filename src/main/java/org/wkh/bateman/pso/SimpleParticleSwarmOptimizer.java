@@ -17,7 +17,7 @@ public class SimpleParticleSwarmOptimizer {
     // this might seem a poor abstraction, but actually it winds up being less 
     // tedious than having an array of objects
     // this is because Java is a fucking piece of shit
-    private double[][] x;
+    private double[][] x; // first Dimension representative of the number of particles
     private double[][] v;
     private double[][] pbest;
     private double[] pbestVal;
@@ -34,11 +34,8 @@ public class SimpleParticleSwarmOptimizer {
         this.xmin = xmin;
         this.xmax = xmax;
         this.generations = generations;
-
-        this.n = xmin.length;
-
+        this.n = xmin.length; // 3
         x = new double[SWARM_SIZE][n];
-
         rng = new MersenneTwisterFast();
 
         for (int i = 0; i < SWARM_SIZE; i++) {
@@ -54,7 +51,6 @@ public class SimpleParticleSwarmOptimizer {
                 double width = Math.abs(xmax[d] - xmin[d]);
                 v[i][d] = 0.0;
             }
-
         }
 
         pbest = new double[SWARM_SIZE][n];
@@ -62,11 +58,11 @@ public class SimpleParticleSwarmOptimizer {
 
         for (int i = 0; i < n; i++) {
             pbest[i] = Arrays.copyOf(x[i], n);
-            pbestVal[i] = fitness.evaluate(pbest[i]);
+            pbestVal[i] = fitness.evaluate(pbest[i]); // Local optima
         }
 
+        // Global optimization
         gbest = x[0];
-
         gbestVal = fitness.evaluate(gbest);
 
         for (int i = 1; i < SWARM_SIZE; i++) {
